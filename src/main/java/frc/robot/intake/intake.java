@@ -25,7 +25,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
-public class intake implements Subsystem {
+public class Intake implements Subsystem {
     public SparkFlex UpMotor;
     public TalonFX TurnMotor;
     
@@ -36,9 +36,9 @@ public class intake implements Subsystem {
     public TalonFXConfiguration TurnConfig;
 
     public DutyCycleOut TurnPID;
-    private static intake inst;
+    private static Intake inst;
     
-    private intake(){
+    private Intake(){
         UpMotor = new SparkFlex(constant.UpMotorID, MotorType.kBrushless);
         TurnMotor = new TalonFX(constant.TurnMotorID);
 
@@ -108,8 +108,8 @@ public class intake implements Subsystem {
         DogLog.log("Intake/state", getState());
     }
 
-    public static intake getInstance(){
-        inst = inst == null ? inst : new intake();
+    public static Intake getInstance(){
+        inst = inst == null ? inst : new Intake();
         return inst;
 
     }

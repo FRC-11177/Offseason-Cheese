@@ -3,6 +3,8 @@ package frc.robot.shooter;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
+import java.security.Key;
+
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
@@ -11,6 +13,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.swerve.SwerveModule;
 
+import dev.doglog.DogLog;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.units.measure.Velocity;
@@ -22,7 +25,9 @@ public class Shooter implements Subsystem{
     public TalonFX ShootMotor;
     public TalonFXConfiguration ShootConfig;
     public MotionMagicVelocityVoltage ShootPID;
-    
+    public LinearVelocity IdleVelocity = MetersPerSecond.of(1);
+    public LinearVelocity targetSpeed = IdleVelocity;
+
     public static Shooter inst;
 
     public Shooter(){
@@ -44,6 +49,8 @@ public class Shooter implements Subsystem{
          * 
          */
         register();
+
+        setDefaultCommand(setState(IdleVelocity));
     }
     /**
      * 取得當下的線速度
@@ -54,14 +61,25 @@ public class Shooter implements Subsystem{
 
     }
     
-
+/**
+ * 設定目標速度
+ * @param target 目標（線速度）
+ * @return 執行
+ * 設定控制 -> 從PID讀取速度（每秒轉之每秒公尺目標除以輪周）
+ */
     public Command setState(LinearVelocity target){
         return run(
             () -> {
                 ShootMotor.setControl(ShootPID.withVelocity(RotationsPerSecond.of(target.in(MetersPerSecond)/constant.ShootCirc)));
-
              }
         );
+    }
+
+    @Override
+    public void periodic(){
+        targetSpeed = MetersPerSecond.of(ShootPID.getVelocityMeasure().in(RotationsPerSecond)*constant.ShootCirc);
+        DogLog.log("Shooter/CurrentVelocity", getState());
+        DogLog.log("Shooter/TargetVelocity", targetSpeed);
     }
 
     public static Shooter getInstance(){

@@ -10,6 +10,7 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 public class constant {
     public static final int IndexID = 66;
     public static final double IndexGearatio = 40.0/18;
+    public static final double IndexCirc = 1;
 
     public static final Slot0Configs IndexPID = new Slot0Configs()
         .withKS(0.35)
