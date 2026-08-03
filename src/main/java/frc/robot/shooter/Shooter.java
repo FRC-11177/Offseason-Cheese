@@ -3,23 +3,15 @@ package frc.robot.shooter;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
-import java.security.Key;
-
-import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.swerve.SwerveModule;
-
 import dev.doglog.DogLog;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.units.measure.LinearVelocity;
-import edu.wpi.first.units.measure.Velocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import frc.robot.intake.intake;
 
 public class Shooter implements Subsystem{
     public TalonFX ShootMotor;
@@ -44,29 +36,38 @@ public class Shooter implements Subsystem{
         ShootConfig.withMotionMagic(constant.ShootMotionMagic);
 
         ShootMotor.getConfigurator().apply(ShootConfig);
-        /**
-         *  寫設定，寫getState setState(要吃linearvelocity)
-         * 
-         */
+     
         register();
 
         setDefaultCommand(setState(IdleVelocity));
+        getVelocity();
+        
+    }
+    /**
+     * 取得當下的線速度
+     * @deprecated 為了增加程式的可讀性，更改API名稱為 {@link #getVelocity()} 
+     * @return 取得速度值轉換成每秒轉＊輪周（單位：每秒公尺）
+     */
+    @Deprecated(forRemoval = true, since = "940987d")
+    public LinearVelocity getState(){
+        return MetersPerSecond.of(ShootMotor.getVelocity().getValue().in(RotationsPerSecond)*constant.ShootCirc);
+
     }
     /**
      * 取得當下的線速度
      * @return 取得速度值轉換成每秒轉＊輪周（單位：每秒公尺）
      */
-    public LinearVelocity getState(){
+    public LinearVelocity getVelocity(){
         return MetersPerSecond.of(ShootMotor.getVelocity().getValue().in(RotationsPerSecond)*constant.ShootCirc);
 
     }
     
-/**
- * 設定目標速度
- * @param target 目標（線速度）
- * @return 執行
- * 設定控制 -> 從PID讀取速度（每秒轉之每秒公尺目標除以輪周）
- */
+    /**
+     * 設定目標速度
+     * @param target 目標（線速度）
+     * @return 執行
+     * 設定控制 -> 從PID讀取速度（每秒轉之每秒公尺目標除以輪周）
+     */
     public Command setState(LinearVelocity target){
         return run(
             () -> {
@@ -86,4 +87,5 @@ public class Shooter implements Subsystem{
         inst = inst == null ? new Shooter() : inst;
         return inst;
     }
+    
 }

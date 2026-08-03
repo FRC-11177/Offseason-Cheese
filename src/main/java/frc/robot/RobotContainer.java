@@ -7,10 +7,10 @@ package frc.robot;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.intake.intake;
+import frc.robot.intake.Intake;
 
 public class RobotContainer {
-  public intake take = intake.getInstance();
+  public Intake take = Intake.getInstance();
 
   public RobotContainer() {
     take.setDefaultCommand(take.setState(new SwerveModuleState()));
