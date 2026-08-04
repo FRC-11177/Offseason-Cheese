@@ -3,6 +3,12 @@ package frc.robot.shooter;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
+
+import java.security.Key;
+
+import org.photonvision.PhotonUtils;
+
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -12,6 +18,9 @@ import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+//import frc.robot.Drivetain.Drivetrain;
+import frc.robot.intake.Intake;
+import frc.robot.shooter.constant.FieldPlace;
 
 public class Shooter implements Subsystem{
     public TalonFX ShootMotor;
@@ -20,9 +29,10 @@ public class Shooter implements Subsystem{
     public LinearVelocity IdleVelocity = MetersPerSecond.of(1);
     public LinearVelocity targetSpeed = IdleVelocity;
 
+    private final double g = 9.807;
     public static Shooter inst;
 
-    public Shooter(){
+    private Shooter(){
         ShootMotor = new TalonFX(constant.ShootMotor);
         ShootConfig = new TalonFXConfiguration();
         ShootPID = new MotionMagicVelocityVoltage(0);
@@ -40,6 +50,7 @@ public class Shooter implements Subsystem{
         register();
 
         setDefaultCommand(setState(IdleVelocity));
+
         getVelocity();
         
     }
@@ -76,6 +87,20 @@ public class Shooter implements Subsystem{
         );
     }
 
+    public Command shoot(){
+        return setState(MetersPerSecond.of(
+            Math.sqrt(
+                g*getDistanceToHub()*getDistanceToHub()/
+                2*constant.PitchAngle.getCos()*constant.PitchAngle.getCos()*(getDistanceToHub()*constant.PitchAngle.getTan()-)
+
+            )
+        ));
+
+    }
+
+    private double getDistanceToHub(){
+        return PhotonUtils.getDistanceToPose(Drivetrain.getInstance().getPose3d().plus(constant.place).toPose2d(), FieldPlace.HUB.getPose2d());
+    }
     @Override
     public void periodic(){
         targetSpeed = MetersPerSecond.of(ShootPID.getVelocityMeasure().in(RotationsPerSecond)*constant.ShootCirc);
@@ -87,5 +112,5 @@ public class Shooter implements Subsystem{
         inst = inst == null ? new Shooter() : inst;
         return inst;
     }
-    
+
 }
