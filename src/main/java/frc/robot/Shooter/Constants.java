@@ -2,7 +2,6 @@ package frc.robot.Shooter;
 
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Centimeters;
-import static edu.wpi.first.units.Units.Inches;
 
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
@@ -24,6 +23,6 @@ public class Constants {
         .withMotionMagicAcceleration(0)
         .withMotionMagicJerk(0);
     public static Current CurrentLimit = Amps.of(60);
-    
+
 
 }
