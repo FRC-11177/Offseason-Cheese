@@ -24,6 +24,10 @@ public class constant {
         .withMotionMagicAcceleration(0)
         .withMotionMagicJerk(0);
 
+    /**
+     * 確切三維待確認
+     * Transfor3d ( x , y , z ,rotation 180/0 標記方向用)
+     */
     public static Transform3d ShootPlace = new Transform3d(
         Centimeter.of(0),Centimeter.of(50),Centimeter.of(0), new Rotation3d(Rotation2d.kZero)
     );
