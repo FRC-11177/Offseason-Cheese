@@ -1,4 +1,4 @@
-package frc.robot.Indexer;
+package frc.robot.indexer;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;

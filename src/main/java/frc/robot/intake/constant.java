@@ -4,18 +4,16 @@ import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Inches;
 import static edu.wpi.first.units.Units.Meters;
 
-import com.ctre.phoenix6.configs.MotionMagicConfigs;
-import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
+
 import com.revrobotics.spark.FeedbackSensor;
-import com.revrobotics.spark.SparkFlex;
+
 import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.FeedForwardConfig;
-import com.revrobotics.spark.config.LimitSwitchConfig;
+
 import com.revrobotics.spark.config.MAXMotionConfig;
 import com.revrobotics.spark.config.SoftLimitConfig;
 
 import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.Distance;
 
 public class constant {
     public static final int UpMotorID = 10;

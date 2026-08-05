@@ -1,8 +1,5 @@
-package frc.robot.Indexer;
+package frc.robot.indexer;
 
-import static edu.wpi.first.units.Units.Inches;
-import static edu.wpi.first.units.Units.Meter;
-import static edu.wpi.first.units.Units.Meters;
 
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;

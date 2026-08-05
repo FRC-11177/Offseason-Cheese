@@ -1,7 +1,5 @@
 package frc.robot.intake;
 
-import static edu.wpi.first.units.Units.Amps;
-import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
