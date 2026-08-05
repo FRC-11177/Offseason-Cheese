@@ -24,8 +24,8 @@ import edu.wpi.first.units.measure.LinearVelocity;
 
 public class Constants {
     public static Slot0Configs DrivePID = new Slot0Configs()
-        .withKP(0).withKD(0)
-        .withKS(0).withKV(0).withKA(0)
+        .withKP(5.5).withKD(0)
+        .withKS(0.18).withKV(0.747).withKA(0)
         .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseVelocitySign);
     public static Slot0Configs SteerPID = new Slot0Configs()
         .withKP(0).withKD(0)
@@ -55,7 +55,7 @@ public class Constants {
         new ModuleConfig(
             7, 
             8, 
-            10, 
+            12, 
             Rotations.of(0), 
             false, 
             new Translation2d(-WheelOffset, WheelOffset)),
@@ -63,21 +63,21 @@ public class Constants {
         new ModuleConfig(
             5, 
             6, 
-            2, 
+            11, 
             Rotations.of(0), 
             true, 
             new Translation2d(WheelOffset, WheelOffset)),
         new ModuleConfig(
             1, 
             2, 
-            3, 
+            9, 
             Rotations.of(0), 
             false, 
             new Translation2d(-WheelOffset, -WheelOffset)),
         new ModuleConfig(
             3, 
             4, 
-            4, 
+            10, 
             Rotations.of(0), 
             true, 
             new Translation2d(WheelOffset, -WheelOffset))

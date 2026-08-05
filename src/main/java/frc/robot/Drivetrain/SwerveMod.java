@@ -10,7 +10,7 @@ import static edu.wpi.first.units.Units.Seconds;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
-import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -27,7 +27,7 @@ public class SwerveMod {
     public TalonFX DriveMotor, SteerMotor;
     public CANcoder Encoder;
 
-    public MotionMagicVelocityVoltage DrivePID;
+    public VelocityVoltage DrivePID;
     public MotionMagicExpoVoltage SteerPID;
 
     private TalonFXConfiguration DriveConfig, SteerConfig;
@@ -38,7 +38,7 @@ public class SwerveMod {
         SteerMotor = new TalonFX(config.SteerID());
         Encoder = new CANcoder(config.EncoderID());
 
-        DrivePID = new MotionMagicVelocityVoltage(0);
+        DrivePID = new VelocityVoltage(0);
         SteerPID = new MotionMagicExpoVoltage(0);
 
         DriveConfig = new TalonFXConfiguration();

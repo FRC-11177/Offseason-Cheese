@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import dev.doglog.DogLog;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator3d;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -20,7 +21,6 @@ public class Drivetrain implements Subsystem{
     public List<SwerveMod> modules;
     public Pigeon2 gyro;
     public SwerveDrivePoseEstimator3d PoseEstimator;
-    
     private static Drivetrain inst;
 
     private Drivetrain(){
@@ -96,6 +96,7 @@ public class Drivetrain implements Subsystem{
     public void periodic(){
         PoseEstimator.update(gyro.getRotation3d(), getPositions());
         modules.stream().forEach(SwerveMod::log);
+        DogLog.log("Drivetrain/ModuleState", getStates());
     }
 
     public static Drivetrain getInstance(){
