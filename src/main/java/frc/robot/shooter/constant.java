@@ -50,7 +50,7 @@ public class constant {
 
     public static final Rotation2d PitchAngle = Rotation2d.fromDegrees(18);
     //射出角度
-    public static final Distance ShooterToHub =  ;
+    //public static final Distance ShooterToHub;
  
 
     /**

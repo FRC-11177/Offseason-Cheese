@@ -10,7 +10,9 @@ import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
@@ -142,6 +144,8 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         return getPigeon2() != null ? getState().Pose : new Pose2d();
     }
 
+
+    
 
     /**
      * 取得底盤目前的航向角 (Angle)。
@@ -284,4 +288,7 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
         inst = inst == null ? new Drivetrain() : inst;
         return inst;
     }
+    
+
+    
 }
