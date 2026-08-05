@@ -10,7 +10,6 @@ import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -145,8 +144,11 @@ public class Drivetrain extends TunerSwerveDrivetrain implements Subsystem {
     }
 
 
+    public Pose3d getPose3d() {
+        // 將現有的 Pose2d 轉為 Pose3d (Z軸設為 0)
+        return new Pose3d(getPose());
+    }
     
-
     /**
      * 取得底盤目前的航向角 (Angle)。
      * 

@@ -19,7 +19,6 @@ import edu.wpi.first.units.measure.LinearVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.drivetrain.Drivetrain;
-//import frc.robot.Drivetain.Drivetrain;
 import frc.robot.intake.Intake;
 import frc.robot.shooter.constant.FieldPlace;
 
@@ -49,8 +48,6 @@ public class Shooter implements Subsystem{
         ShootMotor.getConfigurator().apply(ShootConfig);
      
         register();
-
-        setDefaultCommand(setState(IdleVelocity));
 
         getVelocity();
         
@@ -92,7 +89,7 @@ public class Shooter implements Subsystem{
         return setState(MetersPerSecond.of(
             Math.sqrt(
                 g*getDistanceToHub()*getDistanceToHub()/
-                2*constant.PitchAngle.getCos()*constant.PitchAngle.getCos()*(getDistanceToHub()*constant.PitchAngle.getTan()-)
+                2*constant.PitchAngle.getCos()*constant.PitchAngle.getCos()*(getDistanceToHub()*constant.PitchAngle.getTan())
 
             )
         ));
@@ -105,7 +102,7 @@ public class Shooter implements Subsystem{
     @Override
     public void periodic(){
         targetSpeed = MetersPerSecond.of(ShootPID.getVelocityMeasure().in(RotationsPerSecond)*constant.ShootCirc);
-        DogLog.log("Shooter/CurrentVelocity", getState());
+        DogLog.log("Shooter/CurrentVelocity", getVelocity());
         DogLog.log("Shooter/TargetVelocity", targetSpeed);
     }
 
