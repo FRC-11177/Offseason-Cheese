@@ -53,30 +53,30 @@ public class Constants {
 
     public static List<ModuleConfig> ModuleConfigs = List.of(
         new ModuleConfig(
-            11, 
-            12, 
+            7, 
+            8, 
             10, 
             Rotations.of(0), 
             false, 
             new Translation2d(-WheelOffset, WheelOffset)),
 
         new ModuleConfig(
-            21, 
-            22, 
+            5, 
+            6, 
             2, 
             Rotations.of(0), 
             true, 
             new Translation2d(WheelOffset, WheelOffset)),
         new ModuleConfig(
-            31, 
-            32, 
+            1, 
+            2, 
             3, 
             Rotations.of(0), 
             false, 
             new Translation2d(-WheelOffset, -WheelOffset)),
         new ModuleConfig(
-            41, 
-            42, 
+            3, 
+            4, 
             4, 
             Rotations.of(0), 
             true, 
