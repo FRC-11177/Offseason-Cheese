@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.KilogramSquareMeters;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volts;
 
@@ -30,6 +31,7 @@ import com.ctre.phoenix6.swerve.SwerveModuleConstantsFactory;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.units.measure.LinearVelocity;
@@ -72,11 +74,12 @@ public class Constants {
                 .withStatorCurrentLimitEnable(true)
         );
     public static CANcoderConfiguration EncoderConfig = new CANcoderConfiguration(); //把設定刷回去原廠設定
-    public Pigeon2Configuration GyroConfig = null; //因為陀螺儀通常不會用程式設定，所以就用null防止原本有的值被刷掉
+    public static Pigeon2Configuration GyroConfig = null; //因為陀螺儀通常不會用程式設定，所以就用null防止原本有的值被刷掉
 
     public static Distance WheelRadius = Inches.of(2);
     public static LinearVelocity MaxVelocity = WheelRadius.times(2).times(Math.PI).times(100/Constants.DriveGearRatio).per(Second);
     public static LinearVelocity MaxDriveVelocity = MetersPerSecond.of(4);
+    public static AngularVelocity MaxDriveOmega = RotationsPerSecond.of(1.5);
     public static final double DriveGearRatio = 1.0/(14.0/54*32/25*15/30);
     public static final double SteerGearRatio = 287.0/11;
     public static final double CoupleGearRatio = 54.0/14;
@@ -85,7 +88,7 @@ public class Constants {
     public static MomentOfInertia SimulationInertia = KilogramSquareMeters.of(0.01);
     public static Voltage SimulationFrictionVoltage = Volts.of(0.2);
 
-    public SwerveDrivetrainConstants DrivetrainConstants = new SwerveDrivetrainConstants()
+    public static SwerveDrivetrainConstants DrivetrainConstants = new SwerveDrivetrainConstants()
         .withCANBusName(bus.getName())
         .withPigeon2Id(0)
         .withPigeon2Configs(GyroConfig);
@@ -113,9 +116,9 @@ public class Constants {
             .withSteerFrictionVoltage(SimulationFrictionVoltage)
             .withDriveFrictionVoltage(SimulationFrictionVoltage);
 
-    public double WheelOffset = Centimeters.of(55).div(2).in(Meters);
+    public static double WheelOffset = Centimeters.of(55).div(2).in(Meters);
 
-    public List<ModuleConfig> modules = List.of(
+    public static List<ModuleConfig> modules = List.of(
         new ModuleConfig( //FL
             7, 
             8, 
