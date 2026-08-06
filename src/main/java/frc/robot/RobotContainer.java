@@ -20,8 +20,8 @@ public class RobotContainer {
   public CommandXboxController controller = new CommandXboxController(0);
   public SwerveRequest.FieldCentric driveRequest = new SwerveRequest.FieldCentric()
     .withDesaturateWheelSpeeds(true)
-    .withDriveRequestType(DriveRequestType.Velocity)
-    .withSteerRequestType(SteerRequestType.MotionMagicExpo);
+    .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
+    .withSteerRequestType(SteerRequestType.Position);
 
   public RobotContainer() {
     drivetrain.setDefaultCommand(drivetrain.drive(() -> driveRequest

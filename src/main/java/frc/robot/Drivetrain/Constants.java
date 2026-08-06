@@ -10,6 +10,7 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Seconds;
 import static edu.wpi.first.units.Units.Volts;
 
 import java.util.List;
@@ -39,15 +40,13 @@ import edu.wpi.first.units.measure.MomentOfInertia;
 import edu.wpi.first.units.measure.Voltage;
 
 public class Constants {
-    public static CANBus bus = new CANBus("rio");
+    public static CANBus bus = new CANBus();
     public static Slot0Configs DrivePID = new Slot0Configs()
         .withKP(0).withKD(0)
-        .withKS(0).withKV(0)
-        .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseVelocitySign);
+        .withKS(0).withKV(0);
     public static Slot0Configs SteerPID = new Slot0Configs()
-        .withKP(0).withKD(0)
-        .withKS(0).withKD(0)
-        .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseVelocitySign);
+        .withKP(80).withKD(0)
+        .withKS(0.21).withKD(0);
 
     //控制是不是用磁場導向(FOC)控制
     public static ClosedLoopOutputType DriveOutputType = ClosedLoopOutputType.Voltage;
@@ -76,13 +75,14 @@ public class Constants {
     public static CANcoderConfiguration EncoderConfig = new CANcoderConfiguration(); //把設定刷回去原廠設定
     public static Pigeon2Configuration GyroConfig = null; //因為陀螺儀通常不會用程式設定，所以就用null防止原本有的值被刷掉
 
-    public static Distance WheelRadius = Inches.of(2);
-    public static LinearVelocity MaxVelocity = WheelRadius.times(2).times(Math.PI).times(100/Constants.DriveGearRatio).per(Second);
-    public static LinearVelocity MaxDriveVelocity = MetersPerSecond.of(4);
-    public static AngularVelocity MaxDriveOmega = RotationsPerSecond.of(1.5);
     public static final double DriveGearRatio = 1.0/(14.0/54*32/25*15/30);
     public static final double SteerGearRatio = 287.0/11;
     public static final double CoupleGearRatio = 54.0/14;
+    public static Distance WheelRadius = Inches.of(2);
+    public static LinearVelocity MaxVelocity = WheelRadius.times(2*Math.PI).times(100/Constants.DriveGearRatio).per(Seconds);
+    public static LinearVelocity MaxDriveVelocity = MetersPerSecond.of(4);
+    public static AngularVelocity MaxDriveOmega = RotationsPerSecond.of(1.5);
+
 
     //.模擬器在用的東西不用理他
     public static MomentOfInertia SimulationInertia = KilogramSquareMeters.of(0.01);
@@ -90,7 +90,7 @@ public class Constants {
 
     public static SwerveDrivetrainConstants DrivetrainConstants = new SwerveDrivetrainConstants()
         .withCANBusName(bus.getName())
-        .withPigeon2Id(0)
+        .withPigeon2Id(1)
         .withPigeon2Configs(GyroConfig);
 
     public static final SwerveModuleConstantsFactory<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> ModuleFactory =
@@ -119,34 +119,34 @@ public class Constants {
     public static double WheelOffset = Centimeters.of(55).div(2).in(Meters);
 
     public static List<ModuleConfig> modules = List.of(
-        new ModuleConfig( //FL
-            7, 
-            8, 
-            12, 
+         new ModuleConfig( //FL
+            3, 
+            4, 
+            10, 
             Rotations.of(0), 
-            new Translation2d(-WheelOffset, WheelOffset), 
+            new Translation2d(WheelOffset, -WheelOffset), 
             false),
         new ModuleConfig( //FR
-            5, 
-            6, 
-            11, 
-            Rotations.of(0), 
-            new Translation2d(WheelOffset, WheelOffset), 
-            true),
-        new ModuleConfig( //BL
             1, 
             2, 
             9, 
             Rotations.of(0), 
             new Translation2d(-WheelOffset, -WheelOffset), 
             false),
-        new ModuleConfig( //BR
-            3, 
-            4, 
-            10, 
+        new ModuleConfig( //BL
+            5, 
+            6, 
+            11, 
             Rotations.of(0), 
-            new Translation2d(WheelOffset, -WheelOffset), 
-            true)
+            new Translation2d(WheelOffset, WheelOffset), 
+            true),
+        new ModuleConfig( //BR
+            7, 
+            8, 
+            12, 
+            Rotations.of(0), 
+            new Translation2d(-WheelOffset, WheelOffset), 
+            false)
     );
 
     public record ModuleConfig(

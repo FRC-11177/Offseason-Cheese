@@ -24,14 +24,26 @@ public class Drivetrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
         Constants.DrivetrainConstants, Constants.modules.stream().<SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>>map(c -> c.toModuleConstants()).toArray(SwerveModuleConstants<?,?,?>[]::new));
     }
 
+    /**
+     * 取得目前底盤的速度
+     * @return 目前底盤的速度（機器中心）
+     */
     public ChassisSpeeds getSpeeds(){
         return getState().Speeds;
     }
 
+    /**
+     * 取得目前機器的座標
+     * @return 機器的座標
+     */
     public Pose2d getPose(){
         return this.getState().Pose;
     }
 
+    /**
+     * 取得目前機器的3d座標
+     * @return 3d的座標
+     */
     public Pose3d getPose3d(){
         return new Pose3d(getPose());
     }
