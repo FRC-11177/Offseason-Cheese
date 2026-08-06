@@ -1,5 +1,6 @@
 package frc.robot.intake;
 
+import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -92,7 +93,17 @@ public class Intake implements Subsystem {
         return run(() -> {
             UpPID.setSetpoint(target.angle.getRotations(), ControlType.kMAXMotionPositionControl);
             TurnMotor.setControl(TurnPID.withOutput(target.speedMetersPerSecond/constant.TurnMaxVelocity));
-        }).until(() -> getState().angle.getMeasure().isNear(target.angle.getMeasure(), 0.05));
+            if(TurnMotor.getStatorCurrent().getValue().gt(Amps.of(120))){
+                TurnMotor.set(-0.2);
+                try{
+                    Thread.sleep(100); //(100ms)
+                }catch(Exception e){}
+                TurnMotor.setControl(TurnPID.withOutput(target.speedMetersPerSecond/constant.TurnMaxVelocity));
+
+            }
+        })
+        .until(() -> getState().angle.getMeasure().isNear(target.angle.getMeasure(), 0.05));
+
     }
 
     public Command shake(){
@@ -101,6 +112,7 @@ public class Intake implements Subsystem {
                 .repeatedly();
     }
 
+    
     @Override
     public void periodic(){
         DogLog.log("Intake/state", getState());
