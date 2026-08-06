@@ -113,7 +113,8 @@ public class Shooter implements Subsystem{
     }
 
     private double getDistanceToHub(){
-        return PhotonUtils.getDistanceToPose(Drivetrain.getInstance().getPose3d().plus(constant.place).toPose2d(), FieldPlace.HUB.getPose2d());
+        return 0;
+        // return PhotonUtils.getDistanceToPose(Drivetrain.getInstance().getPose3d().plus(constant.place).toPose2d(), FieldPlace.HUB.getPose2d());
     }
     @Override
     public void periodic(){

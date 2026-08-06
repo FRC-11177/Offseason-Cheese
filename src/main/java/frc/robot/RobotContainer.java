@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.ctre.phoenix6.swerve.SwerveModule.SteerRequestType;
+
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -27,7 +31,7 @@ public class RobotContainer {
     /**
      * intake 按下後旋轉
      */
-      controller.a().whileTrue(command);
+      // controller.a().whileTrue(command);
 
 
   }
