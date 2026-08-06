@@ -23,8 +23,8 @@ import frc.robot.intake.Intake;
 import frc.robot.shooter.constant.FieldPlace;
 
 public class Shooter implements Subsystem{
-    public TalonFX ShootMotor;
-    public TalonFXConfiguration ShootConfig;
+    public TalonFX ShootLeftMotor,ShootRightMotor;
+    public TalonFXConfiguration ShootLeftConfig,ShootRightConfig;
     public MotionMagicVelocityVoltage ShootPID;
     public LinearVelocity IdleVelocity = MetersPerSecond.of(1);
     public LinearVelocity targetSpeed = IdleVelocity;
@@ -33,20 +33,36 @@ public class Shooter implements Subsystem{
     public static Shooter inst;
 
     private Shooter(){
-        ShootMotor = new TalonFX(constant.ShootMotor);
-        ShootConfig = new TalonFXConfiguration();
+        //左
+        ShootLeftMotor = new TalonFX(constant.ShootLeftMotor);
+        ShootLeftConfig = new TalonFXConfiguration();
+        ShootPID = new MotionMagicVelocityVoltage(0);
+    
+        ShootLeftConfig.MotorOutput
+            .withNeutralMode(NeutralModeValue.Brake)
+            .withInverted(InvertedValue.CounterClockwise_Positive);
+        ShootLeftConfig.Feedback
+            .withSensorToMechanismRatio(constant.ShootGearatio);
+        ShootLeftConfig.withSlot0(constant.ShootPID);
+        ShootLeftConfig.withMotionMagic(constant.ShootMotionMagic);
+
+        ShootLeftMotor.getConfigurator().apply(ShootLeftConfig);
+     
+        //右
+        ShootRightMotor = new TalonFX(constant.ShootRightMotor);
+        ShootRightConfig = new TalonFXConfiguration();
         ShootPID = new MotionMagicVelocityVoltage(0);
 
-        ShootConfig.MotorOutput
+        ShootRightConfig.MotorOutput
             .withNeutralMode(NeutralModeValue.Brake)
             .withInverted(InvertedValue.Clockwise_Positive);
-        ShootConfig.Feedback
+        ShootRightConfig.Feedback
             .withSensorToMechanismRatio(constant.ShootGearatio);
-        ShootConfig.withSlot0(constant.ShootPID);
-        ShootConfig.withMotionMagic(constant.ShootMotionMagic);
+        ShootRightConfig.withSlot0(constant.ShootPID);
+        ShootRightConfig.withMotionMagic(constant.ShootMotionMagic);
 
-        ShootMotor.getConfigurator().apply(ShootConfig);
-     
+        ShootRightMotor.getConfigurator().apply(ShootRightConfig);
+
         register();
 
         getVelocity();
@@ -59,7 +75,7 @@ public class Shooter implements Subsystem{
      */
     @Deprecated(forRemoval = true, since = "940987d")
     public LinearVelocity getState(){
-        return MetersPerSecond.of(ShootMotor.getVelocity().getValue().in(RotationsPerSecond)*constant.ShootCirc);
+        return MetersPerSecond.of(ShootLeftMotor.getVelocity().getValue().in(RotationsPerSecond)*constant.ShootCirc);
 
     }
     /**
@@ -67,7 +83,7 @@ public class Shooter implements Subsystem{
      * @return 取得速度值轉換成每秒轉＊輪周（單位：每秒公尺）
      */
     public LinearVelocity getVelocity(){
-        return MetersPerSecond.of(ShootMotor.getVelocity().getValue().in(RotationsPerSecond)*constant.ShootCirc);
+        return MetersPerSecond.of(ShootLeftMotor.getVelocity().getValue().in(RotationsPerSecond)*constant.ShootCirc);
 
     }
     
@@ -80,7 +96,7 @@ public class Shooter implements Subsystem{
     public Command setState(LinearVelocity target){
         return run(
             () -> {
-                ShootMotor.setControl(ShootPID.withVelocity(RotationsPerSecond.of(target.in(MetersPerSecond)/constant.ShootCirc)));
+                ShootLeftMotor.setControl(ShootPID.withVelocity(RotationsPerSecond.of(target.in(MetersPerSecond)/constant.ShootCirc)));
              }
         );
     }

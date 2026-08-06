@@ -20,17 +20,17 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class constant {
-    public static final int ShootMotor = 55;
-    public static final double ShootGearatio = 1;
+    public static final int ShootRightMotor = 22 ,ShootLeftMotor = 21 ;
+    public static final double ShootGearatio = 1.5;
     public static final double ShootCirc = Inches.of(2.25).times(Math.PI).in(Meters);
     public static final Slot0Configs ShootPID = new Slot0Configs()
-         .withKS(0)
-         .withKG(0)
-         .withKP(0)
+         .withKS(0.19)
+         .withKV(0.186)
+         .withKP(0.75)
          .withKD(0);
     public static final MotionMagicConfigs ShootMotionMagic = new MotionMagicConfigs()
-        .withMotionMagicAcceleration(0)
-        .withMotionMagicJerk(0);
+        .withMotionMagicAcceleration(40)
+        .withMotionMagicJerk(550);
 
     /**
      * 確切三維待確認
@@ -53,10 +53,7 @@ public class constant {
     //public static final Distance ShooterToHub;
  
 
-    /**
-     * 設定場地
-     *
-     */
+
     public enum FieldPlace{
         HUB;
         /**

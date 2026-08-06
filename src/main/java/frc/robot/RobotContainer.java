@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.intake.Intake;
 
 public class RobotContainer {
-  public Intake take = Intake.getInstance();
+  public Intake intake = Intake.getInstance();
 
   public RobotContainer() {
-    take.setDefaultCommand(take.setState(new SwerveModuleState()));
+    intake.setDefaultCommand(intake.setState(new SwerveModuleState()));
     configureBindings();
   }
 

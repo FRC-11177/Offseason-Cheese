@@ -16,7 +16,7 @@ import com.revrobotics.spark.config.SoftLimitConfig;
 import edu.wpi.first.units.measure.Angle;
 
 public class constant {
-    public static final int UpMotorID = 10;
+    public static final int UpMotorID = 44;
     public static final double UpGearatio = 1 ;
     
     public static final Angle Upoffset = Degrees.of(0);
