@@ -10,6 +10,9 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 
@@ -19,6 +22,18 @@ public class Drivetrain extends SwerveDrivetrain<TalonFX, TalonFX, CANcoder> imp
     private Drivetrain(){
         super(TalonFX::new, TalonFX::new, CANcoder::new, 
         Constants.DrivetrainConstants, Constants.modules.stream().<SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration>>map(c -> c.toModuleConstants()).toArray(SwerveModuleConstants<?,?,?>[]::new));
+    }
+
+    public ChassisSpeeds getSpeeds(){
+        return getState().Speeds;
+    }
+
+    public Pose2d getPose(){
+        return this.getState().Pose;
+    }
+
+    public Pose3d getPose3d(){
+        return new Pose3d(getPose());
     }
     
     /**
