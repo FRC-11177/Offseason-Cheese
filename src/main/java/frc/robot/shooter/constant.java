@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 public class constant {
     public static final int ShootRightMotor = 22 ,ShootLeftMotor = 21 ;
     public static final double ShootGearatio = 1.5;
-    public static final double ShootCirc = Inches.of(2.25).times(Math.PI).in(Meters);
+    public static final double ShootCirc = Inches.of(3).times(Math.PI).in(Meters);
     public static final Slot0Configs ShootPID = new Slot0Configs()
          .withKS(0.19)
          .withKV(0.186)

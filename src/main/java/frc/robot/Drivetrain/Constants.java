@@ -1,4 +1,4 @@
-package frc.robot.Drivetrain;
+package frc.robot.drivetrain;
 
 import static edu.wpi.first.units.Units.Amp;
 import static edu.wpi.first.units.Units.Amps;

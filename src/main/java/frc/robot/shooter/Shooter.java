@@ -75,7 +75,9 @@ public class Shooter implements Subsystem{
      */
     @Deprecated(forRemoval = true, since = "940987d")
     public LinearVelocity getState(){
-        return MetersPerSecond.of(ShootLeftMotor.getVelocity().getValue().in(RotationsPerSecond)*constant.ShootCirc);
+        return 
+        MetersPerSecond.of(ShootLeftMotor.getVelocity().getValue().in(RotationsPerSecond)*constant.ShootCirc);
+        
 
     }
     /**
@@ -97,6 +99,7 @@ public class Shooter implements Subsystem{
         return run(
             () -> {
                 ShootLeftMotor.setControl(ShootPID.withVelocity(RotationsPerSecond.of(target.in(MetersPerSecond)/constant.ShootCirc)));
+                ShootRightMotor.setControl(ShootPID.withVelocity(RotationsPerSecond.of(target.in(MetersPerSecond)/constant.ShootCirc)));
              }
         );
     }
@@ -121,6 +124,7 @@ public class Shooter implements Subsystem{
         targetSpeed = MetersPerSecond.of(ShootPID.getVelocityMeasure().in(RotationsPerSecond)*constant.ShootCirc);
         DogLog.log("Shooter/CurrentVelocity", getVelocity());
         DogLog.log("Shooter/TargetVelocity", targetSpeed);
+        DogLog.log("Shooter/PowerConsume",Motor.getSupplyCurrent().getValue().times(ShootLeftMotor.getSupplyVoltage().getValue()));
     }
 
     public static Shooter getInstance(){

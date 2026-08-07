@@ -50,3 +50,10 @@ public class Passer implements Subsystem{
         register();
     }
 }
+/**
+ * 尚未寫
+ * inst
+ * passer 的設定速度
+ * Doglog
+ * 
+ */

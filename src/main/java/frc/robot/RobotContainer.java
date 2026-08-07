@@ -32,7 +32,14 @@ public class RobotContainer {
      * intake 按下後旋轉
      */
       // controller.a().whileTrue(command);
-
+    /**
+     * intake 按下後收起，並限定1秒內不可再呼叫
+     */
+    /**
+     * shooter:
+     * 獲得底盤位置，求出與Hub的Distance 
+     * 
+     */
 
   }
 
