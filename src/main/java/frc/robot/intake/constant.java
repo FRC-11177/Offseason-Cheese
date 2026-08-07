@@ -17,7 +17,7 @@ import edu.wpi.first.units.measure.Angle;
 
 public class constant {
     public static final int UpMotorID = 44;
-    public static final double UpGearatio = 1 ;
+    public static final double UpGearatio = 1 ; //齒輪比記得改
     
     public static final Angle Upoffset = Degrees.of(0);
     public static final FeedForwardConfig UpFF = new FeedForwardConfig()
@@ -40,3 +40,8 @@ public class constant {
     public static final double TurnMaxVelocity = 100/constant.TurnGearatio*TurnCirc;
 
 }
+/**
+ * 很多東西還沒確定
+ * pid gearadio 之類
+ * 記得檢查
+ */

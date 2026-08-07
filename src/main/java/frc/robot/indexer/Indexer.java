@@ -31,7 +31,7 @@ public class Indexer implements Subsystem{
         IndexPID = new MotionMagicVelocityVoltage(0);
 
         IndexConfig.MotorOutput
-            .withNeutralMode(NeutralModeValue.Brake)
+            .withNeutralMode(NeutralModeValue.Coast)
             .withInverted(InvertedValue.Clockwise_Positive);
 
         IndexConfig.Feedback
@@ -39,7 +39,7 @@ public class Indexer implements Subsystem{
         IndexMotor.getConfigurator().apply(IndexConfig);
 
         register();
-        setDefaultCommand(setState(Shooter.getInstance().targetSpeed.times(0.6))
+        setDefaultCommand(setState(Shooter.getInstance().IdleVelocity.times(0.6))
         .onlyIf(() -> Shooter.getInstance().targetSpeed.in(MetersPerSecond) != 1));
     } 
 

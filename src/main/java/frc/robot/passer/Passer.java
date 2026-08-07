@@ -49,6 +49,10 @@ public class Passer implements Subsystem{
 
         register();
     }
+    
+    public static Passer getInstance(){
+        return inst = inst == null ? new Passer() : inst ;
+    }
 }
 /**
  * 尚未寫

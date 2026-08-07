@@ -10,9 +10,12 @@ import org.photonvision.PhotonUtils;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
+import com.ctre.phoenix6.controls.StrictFollower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import dev.doglog.DogLog;
 import edu.wpi.first.units.measure.LinearVelocity;
@@ -24,7 +27,7 @@ import frc.robot.shooter.constant.FieldPlace;
 
 public class Shooter implements Subsystem{
     public TalonFX ShootLeftMotor,ShootRightMotor;
-    public TalonFXConfiguration ShootLeftConfig,ShootRightConfig;
+    public TalonFXConfiguration ShootConfig,ShootRightConfig;
     public MotionMagicVelocityVoltage ShootPID;
     public LinearVelocity IdleVelocity = MetersPerSecond.of(1);
     public LinearVelocity targetSpeed = IdleVelocity;
@@ -33,36 +36,26 @@ public class Shooter implements Subsystem{
     public static Shooter inst;
 
     private Shooter(){
-        //左
+        
         ShootLeftMotor = new TalonFX(constant.ShootLeftMotor);
-        ShootLeftConfig = new TalonFXConfiguration();
+        ShootRightMotor = new TalonFX(constant.ShootRightMotor);
+
+
+        ShootConfig = new TalonFXConfiguration();
         ShootPID = new MotionMagicVelocityVoltage(0);
     
-        ShootLeftConfig.MotorOutput
+        ShootConfig.MotorOutput
             .withNeutralMode(NeutralModeValue.Brake)
             .withInverted(InvertedValue.CounterClockwise_Positive);
-        ShootLeftConfig.Feedback
+        ShootConfig.Feedback
             .withSensorToMechanismRatio(constant.ShootGearatio);
-        ShootLeftConfig.withSlot0(constant.ShootPID);
-        ShootLeftConfig.withMotionMagic(constant.ShootMotionMagic);
+        ShootConfig.withSlot0(constant.ShootPID);
+        ShootConfig.withMotionMagic(constant.ShootMotionMagic);
 
-        ShootLeftMotor.getConfigurator().apply(ShootLeftConfig);
-     
-        //右
-        ShootRightMotor = new TalonFX(constant.ShootRightMotor);
-        ShootRightConfig = new TalonFXConfiguration();
-        ShootPID = new MotionMagicVelocityVoltage(0);
-
-        ShootRightConfig.MotorOutput
-            .withNeutralMode(NeutralModeValue.Brake)
-            .withInverted(InvertedValue.Clockwise_Positive);
-        ShootRightConfig.Feedback
-            .withSensorToMechanismRatio(constant.ShootGearatio);
-        ShootRightConfig.withSlot0(constant.ShootPID);
-        ShootRightConfig.withMotionMagic(constant.ShootMotionMagic);
-
-        ShootRightMotor.getConfigurator().apply(ShootRightConfig);
-
+        ShootLeftMotor.getConfigurator().apply(ShootConfig);
+        ShootRightMotor.getConfigurator().apply(ShootConfig);
+        
+        ShootRightMotor.setControl(new Follower(ShootLeftMotor.getDeviceID(), MotorAlignmentValue.Aligned));        
         register();
 
         getVelocity();
@@ -99,7 +92,6 @@ public class Shooter implements Subsystem{
         return run(
             () -> {
                 ShootLeftMotor.setControl(ShootPID.withVelocity(RotationsPerSecond.of(target.in(MetersPerSecond)/constant.ShootCirc)));
-                ShootRightMotor.setControl(ShootPID.withVelocity(RotationsPerSecond.of(target.in(MetersPerSecond)/constant.ShootCirc)));
              }
         );
     }
@@ -124,7 +116,7 @@ public class Shooter implements Subsystem{
         targetSpeed = MetersPerSecond.of(ShootPID.getVelocityMeasure().in(RotationsPerSecond)*constant.ShootCirc);
         DogLog.log("Shooter/CurrentVelocity", getVelocity());
         DogLog.log("Shooter/TargetVelocity", targetSpeed);
-        DogLog.log("Shooter/PowerConsume",Motor.getSupplyCurrent().getValue().times(ShootLeftMotor.getSupplyVoltage().getValue()));
+        DogLog.log("Shooter/PowerConsume",ShootLeftMotor.getSupplyCurrent().getValue().times(ShootLeftMotor.getSupplyVoltage().getValue()));
     }
 
     public static Shooter getInstance(){
