@@ -20,7 +20,6 @@ public class Indexer implements Subsystem{
     public TalonFXConfiguration IndexConfig;
     public MotionMagicVelocityVoltage IndexPID;
 
-    public static Indexer inst;
 
     /**
      * 跟Shooter自動綁定在一起，無公開指令
@@ -40,7 +39,7 @@ public class Indexer implements Subsystem{
 
         register();
         setDefaultCommand(setState(Shooter.getInstance().IdleVelocity.times(0.6))
-        .onlyIf(() -> Shooter.getInstance().targetSpeed.in(MetersPerSecond) != 1));
+        .onlyIf(() -> Shooter.getInstance().targetSpeed != Shooter.getInstance().IdleVelocity));
     } 
 
     /**
@@ -62,8 +61,5 @@ public class Indexer implements Subsystem{
         DogLog.log("Indexer/Velocity", getState());
     }
 
-    public static Indexer getInstance(){
-        inst = inst == null ? inst : new Indexer();
-        return inst;
-    }
+
 }
