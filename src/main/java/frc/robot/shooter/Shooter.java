@@ -33,7 +33,7 @@ public class Shooter implements Subsystem{
     public LinearVelocity targetSpeed = IdleVelocity;
 
     private final double g = 9.807;
-    public static Shooter inst;
+    private static Shooter inst;
 
     private Shooter(){
         
@@ -55,10 +55,7 @@ public class Shooter implements Subsystem{
         ShootLeftMotor.getConfigurator().apply(ShootConfig);
         ShootRightMotor.getConfigurator().apply(ShootConfig);
         
-        ShootRightMotor.setControl(new Follower(ShootLeftMotor.getDeviceID(), MotorAlignmentValue.Aligned));        
         register();
-
-        getVelocity();
         
     }
     /**
@@ -92,6 +89,8 @@ public class Shooter implements Subsystem{
         return run(
             () -> {
                 ShootLeftMotor.setControl(ShootPID.withVelocity(RotationsPerSecond.of(target.in(MetersPerSecond)/constant.ShootCirc)));
+                ShootRightMotor.setControl(new Follower(ShootLeftMotor.getDeviceID(), MotorAlignmentValue.Opposed));        
+                //寫在setstate防止狀態不刷新
              }
         );
     }

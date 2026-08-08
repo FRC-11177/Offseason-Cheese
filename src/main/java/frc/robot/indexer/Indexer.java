@@ -39,7 +39,7 @@ public class Indexer implements Subsystem{
 
         register();
         setDefaultCommand(setState(Shooter.getInstance().IdleVelocity.times(0.6))
-        .onlyIf(() -> Shooter.getInstance().targetSpeed != Shooter.getInstance().IdleVelocity));
+        .onlyIf(() -> Shooter.getInstance().targetSpeed.isNear(Shooter.getInstance().IdleVelocity, MetersPerSecond.of(0))));
     } 
 
     /**
